@@ -3,6 +3,7 @@ package com.reactnativecommunity.webview;
 import android.annotation.TargetApi;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.util.Log;
 import android.webkit.*;
 import com.facebook.react.uimanager.UIManagerModule;
 
@@ -405,8 +406,20 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
             @Override
             public void onPermissionRequest(final PermissionRequest request){
+                for(String r:request.getResources()) {
+                    Log.d("nzm", "onPermissionRequest " + r);
+                }
                 request.grant(request.getResources());
             }
+
+            @Override
+            public void onPermissionRequestCanceled(PermissionRequest request) {
+                for(String r:request.getResources()) {
+                    Log.d("nzm", "onPermissionRequestCanceled " + r);
+                }
+                super.onPermissionRequestCanceled(request);
+            }
+
 
             @Override
             public void onProgressChanged(WebView webView, int newProgress) {
